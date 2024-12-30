@@ -5,11 +5,11 @@ import { notFound } from 'next/navigation';
 import { GetRabbitForsaleProfile } from '@/Services/AngoraDbService';
 
 interface PageProps {
-    params: { earCombId: string };
+    params: Promise<{ earCombId: string }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { earCombId } = params;
+    const { earCombId } = await params;
     
     try {
         const rabbit = await GetRabbitForsaleProfile(earCombId);
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function RabbitForsaleProfilePage({ params }: PageProps) {
-    const { earCombId } = params;
+    const { earCombId } = await params;
     
     try {
         const rabbitProfile = await GetRabbitForsaleProfile(earCombId);
